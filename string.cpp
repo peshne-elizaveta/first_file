@@ -56,11 +56,11 @@ String::String(const String& str) {
     length = str.length;
     capacity_ = str.capacity_;
     my_str = new char[capacity_ + 1];
-    copy(my_str, str.my_str, capacity_);
+    copy(my_str, str.my_str, capacity_);  // Лучше использовать мемкопи
 }
 
 String::String(const String& str, size_t pos, size_t len = npos) {
-    if (pos > str.length) {
+    if (pos > str.length || npos > str.length) {
         throw std::out_of_range("Position out of range");
     }
     if ((len == npos) || (pos + len > str.length)) {
@@ -79,12 +79,12 @@ String::String(const String& str, size_t pos, size_t len = npos) {
 
 // деструктор 
 String::~String() {
-    delete[] my_str;
+    delete[] my_str; // Сделать проверку на существование
 }
 
 // методы
 size_t String::size() const {
-    return length;
+    return length;  // return strData ? length : 0
 }
 
 size_t String::capacity() const {
@@ -210,7 +210,7 @@ String& String::operator+=(char c) {
 }
 
 String& String::operator=(const String& str) {
-    
+
 }
 String& String::operator=(const char* str) {}
 
